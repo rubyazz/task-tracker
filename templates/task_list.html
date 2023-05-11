@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Tracker</title>
+</head>
+
+<body>
+
+    <h2>Task Tracker of Rubyazz</h2>
+    <div class="container">
+        <div class="box-column">
+            <div class="box-header">
+                <h5>Backlog <span class="num">{{ task_counts.backlog }}</span></h5>
+                <li><a href="{% url 'tracker:create'%}"><i class="fa-solid fa-plus"></i></a></li>
+            </div>
+
+            {% for task in tasks.backlog %}
+                <div class="box">
+                    <span class="tag" id="green">{{ task.title }}</span>
+                    <a class="delete" href="{% url 'tracker:delete' task_id=task.id %}" id="red">delete</a>
+                    <p>{{ task.description }}</p>
+                    <div class="box-footer">
+                        <div class="date">
+                            <li><i class="fa-solid fa-calendar-days"></i></li>
+                            <span>{{ task.created_at}}</span>
+                        </div>
+
+                        <p>
+                            <form action="{% url 'tracker:change_status' task.id %}" method="post">
+                            {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for choice in task.STATUS_CHOICES %}
+                                        <option value="{{ choice.0 }}" {% if choice.0 == task.status %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+        <div class="box-column">
+            <div class="box-header">
+                <h5>Doing <span class="num">{{ task_counts.doing }}</span></h5>
+                <li><a href="{% url 'tracker:create'%}"><i class="fa-solid fa-plus"></i></a></li>
+            </div>
+            {% for task in tasks.doing %}
+                <div class="box">
+                    <span class="tag" id="green">{{ task.title }}</span>
+                    <a class="delete" href="{% url 'tracker:delete' task_id=task.id %}" id="red">delete</a>
+                    <p>{{ task.description }}</p>
+                    <div class="box-footer">
+                        <div class="date">
+                            <li><i class="fa-solid fa-calendar-days"></i></li>
+                            <span>{{ task.created_at}}</span>
+                        </div>
+
+                        <p>
+                            <form action="{% url 'tracker:change_status' task.id %}" method="post">
+                            {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for choice in task.STATUS_CHOICES %}
+                                        <option value="{{ choice.0 }}" {% if choice.0 == task.status %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+
+        <div class="box-column">
+            <div class="box-header">
+                <h5>Review <span class="num">{{ task_counts.review }}</span></h5>
+                <li><a href="{% url 'tracker:create'%}"><i class="fa-solid fa-plus"></i></a></li>
+            </div>
+            {% for task in tasks.review %}
+                <div class="box">
+                    <span class="tag" id="green">{{ task.title }}</span>
+                    <a class="delete" href="{% url 'tracker:delete' task_id=task.id %}" id="red">delete</a>
+                    <p>{{ task.description }}</p>
+                    <div class="box-footer">
+                        <div class="date">
+                            <li><i class="fa-solid fa-calendar-days"></i></li>
+                            <span>{{ task.created_at}}</span>
+                        </div>
+
+                        <p>
+                            <form action="{% url 'tracker:change_status' task.id %}" method="post">
+                            {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for choice in task.STATUS_CHOICES %}
+                                        <option value="{{ choice.0 }}" {% if choice.0 == task.status %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+
+
+
+
+        <div class="box-column">
+            <div class="box-header">
+                <h5>Done <span class="num">{{ task_counts.done }}</span></h5>
+                <li><a href="{% url 'tracker:create'%}"><i class="fa-solid fa-plus"></i></a></li>
+            </div>
+            {% for task in tasks.done %}
+                <div class="box">
+                    <span class="tag" id="green">{{ task.title }}</span>
+                    <a class="delete" href="{% url 'tracker:delete' task_id=task.id %}" id="red">delete</a>
+
+                    <p>{{ task.description }}</p>
+                    <div class="box-footer">
+                        <div class="date">
+                            <li><i class="fa-solid fa-calendar-days"></i></li>
+                            <span>{{ task.created_at}}</span>
+                        </div>
+                        <p>
+                            <form action="{% url 'tracker:change_status' task.id %}" method="post">
+                            {% csrf_token %}
+                                <select name="status" onchange="this.form.submit()">
+                                    {% for choice in task.STATUS_CHOICES %}
+                                        <option value="{{ choice.0 }}" {% if choice.0 == task.status %}selected{% endif %}>{{ choice.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div> 
+
+    </div>
+
+
+    
+
+</body>
+
+</html>
